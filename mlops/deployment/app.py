@@ -2,9 +2,17 @@ import streamlit as st
 import pandas as pd
 from huggingface_hub import hf_hub_download
 import joblib
+import joblib, os
 
 # Download the model from the Model Hub
-model_path = hf_hub_download(repo_id="haneuris1/churn-model", filename="best_churn_model_v1.joblib")
+model_path = hf_hub_download(
+    repo_id="haneuris1/churn-model",
+    filename="best_churn_model_v1.joblib",
+    repo_type="model",
+    revision="main",
+    token=os.getenv("HF_TOKEN")  # needed if private
+)
+model = joblib.load(model_path)
 
 # Load the model
 model = joblib.load(model_path)
